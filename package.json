@@ -1,0 +1,35 @@
+{
+  "name": "assignment-digital-paani",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sagar2agrawal/assignment-digital-paani.git"
+  },
+  "author": "Sagar Agrawal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sagar2agrawal/assignment-digital-paani/issues"
+  },
+  "homepage": "https://github.com/sagar2agrawal/assignment-digital-paani#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "helmet": "^5.0.2",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.3",
+    "pino": "^7.11.0"
+  },
+  "devDependencies": {
+    "jest": "^28.1.0",
+    "nodemon": "^2.0.16"
+  }
+}
