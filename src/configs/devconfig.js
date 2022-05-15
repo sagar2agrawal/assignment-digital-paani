@@ -8,6 +8,11 @@ const devConfig = {
     },
     LOG: { //
         LEVEL: process.env.LOG_LEVEL || "debug"
+    },
+    JOBS: { //
+        REDIS_HOSTNAME: process.env.REDIS_HOSTNAME, //
+        REDIS_USERNAME: process.env.REDIS_USERNAME, //
+        REDIS_PASSWORD: process.env.REDIS_PASSWORD
     }
 };
 

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/sagar2agrawal/assignment-digital-paani#readme",
   "dependencies": {
+    "bull": "^4.8.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",

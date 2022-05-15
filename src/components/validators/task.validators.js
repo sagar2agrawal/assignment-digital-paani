@@ -8,7 +8,9 @@ const addTaskSchema = Joi.object({
     taskDescription: Joi.string()
     .min(5)
     .max(2000)
-    .required()
+    .required(),
+    assignedTo: Joi.string().required(),
+    dueDate: Joi.date().timestamp()
 }).options({
     abortEarly: false
 });
