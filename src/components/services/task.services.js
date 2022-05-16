@@ -13,10 +13,10 @@ const getTasks = async () => {
     return
 }
 
-const userWithLessLoad = async () => {
+const userWithLessLoadInFacility = async (facilityID) => {
     let pipelineQuery = [
         {
-            $match: { "facility" : "google"}
+            $match: { "facility" : facilityID}
         },
         { 
             $lookup: { 
@@ -30,12 +30,28 @@ const userWithLessLoad = async () => {
             $project: {
                 facility: 1,
                 Remaining_tasks: {
-                    status: 1, 
-                    priority: 1,
-                    assignedto: 1, 
-                    dueDate: 1
+                    $filter: {
+                        input: "$Remaining_tasks",
+                        as: "task_status", //
+                        cond: {
+                            $in: ["$$task_status.status", ["todo"]]
+                        }
+                    }
                 }
             }
+        },
+        {
+            $project: {
+                    totalRemainingTask: { $size: "$Remaining_tasks" } 
+            }
+        },
+        { //
+            $sort: {
+                totalRemainingTask: 1
+            }
+        },
+        { //
+            $limit : 1 
         }
     ];
 
@@ -45,5 +61,5 @@ const userWithLessLoad = async () => {
 
 export {
     createTask,
-    userWithLessLoad
+    userWithLessLoadInFacility
 }

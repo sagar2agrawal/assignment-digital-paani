@@ -5,7 +5,7 @@ import { taskJobs } from "../jobs/index.jobs.js";
 const getAllTask = async (req, res, next) => {
     // no parameter all tasks
     // parameters with status and priority
-    res.json(await taskServices.userWithLessLoad());
+    res.json(await taskServices.userWithLessLoadInFacility("facebook"));
     // await taskJobs.taskReAssignCreateQueue({});
     // res.json({success: "test get"});
 }
@@ -22,7 +22,8 @@ const addTask = async (req, res, next) => {
             dueDate: dueDate,
             priority: req.body.priority, //
             facility: req.body.facility
-        }); 
+        });
+         
         res.json(result);
     } catch (err) { 
         next(err) 
