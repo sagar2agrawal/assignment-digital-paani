@@ -9,7 +9,8 @@
 
 ## Big Assumtion notes
 1. We are sending the userId for the create, update and delete task, instead of taking user id from JWT
-2. Pagination is skipped due to the task being an assignment
+2. Pagination on get all task filtered on priority, due date is skipped due to the task being an assignment
+3. For the sake of assignment, we are just putting facility name, as a facility
 
 ## Things we are ignoring right now, example below
 - Seperating APP and Server for easier testing

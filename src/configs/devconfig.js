@@ -12,7 +12,8 @@ const devConfig = {
     JOBS: { //
         REDIS_HOSTNAME: process.env.REDIS_HOSTNAME, //
         REDIS_USERNAME: process.env.REDIS_USERNAME, //
-        REDIS_PASSWORD: process.env.REDIS_PASSWORD
+        REDIS_PASSWORD: process.env.REDIS_PASSWORD,
+        REDIS_PORT: process.env.REDIS_PORT
     }
 };
 

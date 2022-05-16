@@ -1,12 +1,13 @@
 import { logger } from '../helpers/index.helper.js';
 import * as taskServices from "../services/task.services.js";
+import { taskJobs } from "../jobs/index.jobs.js";
 
 const getAllTask = async (req, res, next) => {
     // no parameter all tasks
     // parameters with status and priority
-    
-    logger.logger.info("Some Error Here Bro");
-    res.json({success: "test get"});
+    res.json(await taskServices.userWithLessLoad());
+    // await taskJobs.taskReAssignCreateQueue({});
+    // res.json({success: "test get"});
 }
 
 const addTask = async (req, res, next) => {
@@ -18,7 +19,9 @@ const addTask = async (req, res, next) => {
             name: req.body.taskName, 
             description: req.body.taskDescription,
             assignedto: req.body.assignedTo,
-            dueDate: dueDate
+            dueDate: dueDate,
+            priority: req.body.priority, //
+            facility: req.body.facility
         }); 
         res.json(result);
     } catch (err) { 
@@ -30,7 +33,7 @@ const deleteTask = async (req, res, next) => {
     res.json({success: "test delete"});
 }
 
-const completeTask = async (req, res, next) => {
+const updateTask = async (req, res, next) => {
     res.json({success: "test patch"});
 }
 
@@ -39,5 +42,5 @@ export {
     getAllTask,
     addTask,
     deleteTask,
-    completeTask
+    updateTask
 }

@@ -14,9 +14,36 @@ const getTasks = async () => {
 }
 
 const userWithLessLoad = async () => {
-    
+    let pipelineQuery = [
+        {
+            $match: { "facility" : "google"}
+        },
+        { 
+            $lookup: { 
+                from: "tasks",
+                localField: "_id",
+                foreignField: "assignedto",
+                as: "Remaining_tasks"
+            }
+        },
+        {
+            $project: {
+                facility: 1,
+                Remaining_tasks: {
+                    status: 1, 
+                    priority: 1,
+                    assignedto: 1, 
+                    dueDate: 1
+                }
+            }
+        }
+    ];
+
+    const usersWihtLessLoadArray = await userModel.aggregate(pipelineQuery);
+    return usersWihtLessLoadArray;   
 }
 
 export {
-    createTask
+    createTask,
+    userWithLessLoad
 }
