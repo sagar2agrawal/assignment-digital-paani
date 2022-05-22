@@ -1,11 +1,11 @@
 import Joi from "joi";
 
 const addTaskSchema = Joi.object({
-    taskName: Joi.string()
+    name: Joi.string()
                 .min(5)
                 .max(20)
                 .required(),
-    taskDescription: Joi.string()
+    description: Joi.string()
     .min(5)
     .max(2000)
     .required(),
@@ -19,10 +19,7 @@ const addTaskSchema = Joi.object({
 
 
 const deleteTaskSchema = Joi.object({
-    id: Joi.string()
-                .min(5)
-                .max(20)
-                .required()
+    id: Joi.string().required()
 });
 
 

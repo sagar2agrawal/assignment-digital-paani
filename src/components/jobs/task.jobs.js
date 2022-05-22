@@ -17,15 +17,17 @@ taskReassignSchedulerQueue.process((job, done) => {
     // Get all tasks with overdue date
     // Get member with less load
     // Assign member the task
-    logger.logger.info(job.data);
+    logger.logger.info(job.data, job.id);
     done();
 });
 
 const taskReAssignCreateQueue = async (taskDetails) => {
     await taskReassignSchedulerQueue.add({}, {
+        removeOnComplete: true,
         repeat: {
-            every: 1000*60
-        }
+            every: 10000,
+            limit: 100,
+          }
     });
 }
 
@@ -35,6 +37,16 @@ taskReassignSchedulerQueue.on('completed', () => {
 
 });
 
+const taskReAssignEmptyAllQueue = async (taskDetails) => {
+    taskReassignSchedulerQueue.clean(0, 'delayed');
+    taskReassignSchedulerQueue.clean(0, 'wait');
+    taskReassignSchedulerQueue.clean(0, 'active');
+    taskReassignSchedulerQueue.clean(0, 'completed');
+    taskReassignSchedulerQueue.clean(0, 'failed');
+}
+
+
 export {
-    taskReAssignCreateQueue
+    taskReAssignCreateQueue,
+    taskReAssignEmptyAllQueue
 }

@@ -33,7 +33,11 @@ REDIS_PORT=""
 ## Big Assumtion notes
 1. We are sending the userId for the create, update and delete task, instead of taking user id from JWT
 2. Pagination on get all task filtered on priority, due date is skipped due to the task being an assignment
-3. For the sake of assignment, we are just putting facility name, as a facility
+3. For the sake of assignment, we are just putting facility name, as a facility and not creating a seperate collection, where system verifies task facility before task creation
+4. We are not adding redis for checking if it a token is present as a blacklisted token (user blocked, deleted, roles changed, password changed etc)
+5. It's built in such a way that task can be assinged to only one user
+6. For the sake of assingment we have assumed that one person can only be in one company, else we will have to restructure the code/architecture on how to validate a facility lead and user
+
 
 ## Things we are ignoring right now, example below
 - Seperating APP and Server for easier testing
