@@ -11,11 +11,22 @@ const taskSchema = new mongoose.Schema({
     },
     priority: {
         type: String,
-        enum: ["low", "normal", "high"],
+        enum: ["low", "medium", "high"],
         default: "normal",
         index: true
     },
-    assignedto: {
+    assignedToName: {
+        type: String
+    },
+    assignedTo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users',
+        index: true
+    },
+    createdByName: {
+        type: String
+    },
+    createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Users',
         index: true
@@ -33,7 +44,7 @@ const taskSchema = new mongoose.Schema({
 );
 
 taskSchema.index(
-    { status: 1, dueDate: 1, priority: 1, assignedto: 1, facility: 1 },
+    { status: 1, dueDate: 1, priority: 1, assignedTo: 1, facility: 1 },
     { status: 1, dueDate: 1, facility: 1 }, // Index for finding high priority task which are expired
     { dueDate: 1, facility: 1} // Index for finding task which are are expired
 );
