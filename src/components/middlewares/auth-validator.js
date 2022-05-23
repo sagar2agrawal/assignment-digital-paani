@@ -6,12 +6,14 @@ const authValidator = (req, res, next) => {
     // check with Redis for blackist
     // throw errors whenenver anything above is failed
     // will user id and role in the req.user with userId userRole
-
+    
+    // getting data from header instead of jwt
+    const dataFromJWT = JSON.parse(req.headers['user']);
     try {
         req.user = {
-            userId: "628af79f7ce543245f0ee813",
-            userRole: "facilityUser",
-            userFacility: "facebook"
+            userId: dataFromJWT.userId,
+            userRole: dataFromJWT.userRole,
+            userFacility: dataFromJWT.userFacility
         }
         next();
     } catch (error) {

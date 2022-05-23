@@ -10,11 +10,13 @@ REDIS_HOSTNAME=""
 REDIS_PORT=""
 
 ## How to get Started with
-1. Have a mongodb and redis instance instance
+1. Have a mongodb and redis instance running uri and creds
 2. Download the code
 3. npm install
 4. setup .env with .env-template file
-5. npm run
+5. npm start
+6. Run seed data api
+7. send header with key -> user and value -> {"userId": "628b1732980a67a0d7842179", "userRole": "facilityLead", "userFacility": "meta"}
 
 ## How to Test
 1. Due date in timestamp

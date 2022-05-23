@@ -23,4 +23,6 @@ taskRouter.patch('/tasks/:id', authValidator, taskController.updateTask);
 */
 taskRouter.delete('/tasks/:id', authValidator, validateReqParams(deleteTaskSchema), taskController.deleteTask);
 
+taskRouter.get('/seeddb', taskController.seedDB);
+
 export default taskRouter;

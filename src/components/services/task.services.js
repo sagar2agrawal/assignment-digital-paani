@@ -84,11 +84,18 @@ const userWithLessLoadInFacility = async (facilityID) => {
     return usersWihtLessLoadArray;   
 }
 
+
+const getOverDueTasks = async (filters) => { 
+    const allOverDueTask = await taskModel.find(filters).lean().exec();
+    return allOverDueTask;
+}
+
 export {
     createTask,
     userWithLessLoadInFacility,
     getTasksById,
     getAllTask,
     updateTasksById, 
-    deleteTasksById
+    deleteTasksById,
+    getOverDueTasks
 }
