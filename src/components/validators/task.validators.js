@@ -9,7 +9,7 @@ const addTaskSchema = Joi.object({
     .min(5)
     .max(2000)
     .required(),
-    assignedTo: Joi.string().required(),
+    assignedTo: Joi.string(),
     dueDate: Joi.date().timestamp(),
     priority: Joi.string(),
     facility: Joi.string()

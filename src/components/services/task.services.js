@@ -2,7 +2,7 @@ import taskModel from "../models/task.models.js";
 import userModel from "../models/users.models.js";
 
 const createTask = async (task) => {
-    const createdTask = await taskModel.create(task).exec();
+    const createdTask = await taskModel.create(task);
     if (createdTask) {
         return createdTask;
     }

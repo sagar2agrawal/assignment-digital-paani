@@ -1,5 +1,6 @@
 import { logger } from '../helpers/index.helper.js';
 import * as taskServices from "../services/task.services.js";
+import * as userServices from "../services/user.services.js";
 import { taskJobs } from "../jobs/index.jobs.js";
 
 const getAllTask = async (req, res, next) => {
@@ -22,7 +23,7 @@ const getEmployeeWithLessLoad = async (req, res, next) => {
         const employeeWithLessLoad = await taskServices.userWithLessLoadInFacility("google");
         
         if (employeeWithLessLoad.length === 0) {
-            throw new Error("No employee with todo task status, or employee for such facility or such facility found");   
+            throw new Error("Employee for such facility or such facility found");   
         }
 
         res.json(employeeWithLessLoad);   
@@ -36,62 +37,23 @@ const addTask = async (req, res, next) => {
     try {
         const dueDate = new Date(req.body.dueDate*1000);
 
-        /*
-            A Logic for check if the facility exists 
-            and if current user has the permission to create task for that facility
-        */
-
-        // Getting the employee with less load for a specific employee
-        const employeeWithLessLoad = await taskServices.userWithLessLoadInFacility(req.body.facility);
-
-        if (employeeWithLessLoad.length === 0) {
-            throw new Error("No employee with todo task status, or employee for such facility or such facility found");   
-        }
+        // Getting and validating details of assignee and creating employee as well as permissions
+        const {assigneeEmp, creatorEmp} = await getEmpDetailsTaskCreation(req.body, req.user);
 
         let result = await taskServices.createTask({
-            name: req.body.name, 
-            description: req.body.description,
-            assignedTo: employeeWithLessLoad[0]._id,
+            name: req.body.taskName, 
+            description: req.body.taskDescription,
+            assignedTo: assigneeEmp._id,
+            assignedToName: assigneeEmp.name,
             dueDate: dueDate,
-            priority: req.body.priority, //
+            priority: req.body.priority,
             facility: req.body.facility,
-            createdBy: req.user.userId
+            createdBy: creatorEmp.id
         });
         
         /*
              Other events/async/jobs can be added to notify and do other things if needed in background
         */
-        res.json(result);
-    } catch (err) { 
-        next(err) 
-    } 
-}
-
-
-const addTaskByLeads = async (req, res, next) => {
-    logger.logger.debug(`Add Task API Called with request data ${JSON.stringify(req.body)}`);
-    try {
-        const dueDate = new Date(req.body.dueDate*1000);
-
-        const employeeWithLessLoad = await taskServices.userWithLessLoadInFacility(req.body.facility);
-
-        if (employeeWithLessLoad.length === 0) {
-            throw new Error("No employee with todo task status, or employee for such facility or such facility found");   
-        }
-
-        let result = await taskServices.createTask({
-            name: req.body.taskName, 
-            description: req.body.taskDescription,
-            assignedTo: employeeWithLessLoad[0]._id,
-            assignedToName: employeeWithLessLoad[0].name,
-            dueDate: dueDate,
-            priority: req.body.priority,
-            facility: req.body.facility,
-            createdBy: req.body.userId
-        });
-        
-        // Other events/async/jobs can be added to notify and do other things if needed in background
-
         res.json(result);
     } catch (err) { 
         next(err) 
@@ -189,11 +151,48 @@ const taskUpdateQueryBuilder = (parameters) => {
     return {...queryUpdateParameter}
 }
 
+// All the logic to handle the employee assignment and employee creator details
+const getEmpDetailsTaskCreation = async (requestData, sessionData) => { 
+    let employData;
+        /*
+            1. Logic to check if the current user has the access to create task in the given facility
+        */
+        if (requestData.assignedTo) { //
+            employData = await userServices.getUserById(requestData.assignedTo);
+            if (employData?.facility !== requestData.facility || requestData?.facility !== sessionData.userFacility) {
+                throw new Error(`Not allowed to create task for ${employData.name} with in ${requestData?.facility} facility`);
+            }
+
+            if (sessionData.userRole !== "facilityLead" && sessionData.userId !== requestData.assignedTo) {
+                throw new Error(`Not allowed to create task for another employee`);
+            }
+        } 
+        
+        // if a task was created for no specific user
+        if (!requestData.assignedTo) { //
+            const employeeWithLessLoad = await taskServices.userWithLessLoadInFacility(requestData.facility);
+
+            if (employeeWithLessLoad.length === 0 || sessionData.userFacility !== requestData.facility) {
+                throw new Error("Employee for such facility or such facility found");   
+            }
+
+            employData = employeeWithLessLoad[0];
+        }
+
+        const creatorEmp = {
+            id: sessionData.userId
+        };
+
+        return {
+            assigneeEmp: employData, 
+            creatorEmp, 
+        }
+}
+
 export {
     getAllTask,
     addTask,
     deleteTask,
     updateTask,
-    addTaskByLeads,
     getEmployeeWithLessLoad
 }

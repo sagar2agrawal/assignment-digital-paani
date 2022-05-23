@@ -9,9 +9,9 @@ const authValidator = (req, res, next) => {
 
     try {
         req.user = {
-            userId: "6280f57a8524341f061ca44f",
-            userRole: "facilityLead",
-            userFacility: "google"
+            userId: "628af79f7ce543245f0ee813",
+            userRole: "facilityUser",
+            userFacility: "facebook"
         }
         next();
     } catch (error) {
@@ -22,11 +22,11 @@ const authValidator = (req, res, next) => {
 
 const leadRoleValidator = (req, res, next) => {
     try {
-        if (req.user.userRole === "facilityLead") {
-            next();
+        if (req.user.userRole !== "facilityLead") {
+            throw new Error("User not have permission for the task");
         }
 
-        throw new Error("User not have permission for the task")
+        next();
     } catch (error) {
         next(error);
     }
