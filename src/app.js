@@ -17,7 +17,8 @@ import { taskJobs } from "./components/jobs/index.jobs.js";
 const app = express();
 
 // Jobs that check if task is overdue and assigned to member with less load
-// taskJobs.taskReAssignCreateQueue();
+taskJobs.taskReAssignEmptyAllQueue()
+taskJobs.taskReAssignCreateQueue();
 
 
 

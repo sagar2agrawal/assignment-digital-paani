@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "npx nodemon .\\src\\app.js",
     "seed": ""
   },
@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/sagar2agrawal/assignment-digital-paani#readme",
   "dependencies": {
+    "@babel/core": "^7.18.0",
+    "@babel/node": "^7.17.10",
+    "@babel/preset-env": "^7.18.0",
     "bull": "^4.8.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -29,9 +32,11 @@
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.3",
-    "pino": "^7.11.0"
+    "pino": "^7.11.0",
+    "save-dev": "0.0.1-security"
   },
   "devDependencies": {
+    "@types/jest": "^27.5.1",
     "jest": "^28.1.0",
     "nodemon": "^2.0.16"
   }

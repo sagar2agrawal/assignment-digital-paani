@@ -1,13 +1,14 @@
-import { logger } from '../helpers/index.helper.js';
+import { logger, taskHelper } from '../helpers/index.helper.js';
 import * as taskServices from "../services/task.services.js";
 import * as userServices from "../services/user.services.js";
 import { taskJobs } from "../jobs/index.jobs.js";
+import userSeedData from "../../seed/user-data.js";
 
 const getAllTask = async (req, res, next) => {
     try {
 
         // There will be logic to filter and use only the allowed paramters from the filter object
-        const filterObject = getAllTaskFilterBuilder({...req.query});
+        const filterObject = taskHelper.getAllTaskFilterBuilder({...req.query});
 
         const allTasks = await taskServices.getAllTask(filterObject);
 
@@ -18,19 +19,6 @@ const getAllTask = async (req, res, next) => {
     }
 }
 
-const getEmployeeWithLessLoad = async (req, res, next) => {
-    try {
-        const employeeWithLessLoad = await taskServices.userWithLessLoadInFacility("google");
-        
-        if (employeeWithLessLoad.length === 0) {
-            throw new Error("Employee for such facility or such facility found");   
-        }
-
-        res.json(employeeWithLessLoad);   
-    } catch (err) {
-        next(err);
-    }
-}
 
 const addTask = async (req, res, next) => {
     logger.logger.debug(`Add Task API Called with request data ${JSON.stringify(req.body)}`);
@@ -38,11 +26,11 @@ const addTask = async (req, res, next) => {
         const dueDate = new Date(req.body.dueDate*1000);
 
         // Getting and validating details of assignee and creating employee as well as permissions
-        const {assigneeEmp, creatorEmp} = await getEmpDetailsTaskCreation(req.body, req.user);
+        const {assigneeEmp, creatorEmp} = await taskHelper.getEmpDetailsTaskCreation(req.body, req.user);
 
         let result = await taskServices.createTask({
-            name: req.body.taskName, 
-            description: req.body.taskDescription,
+            name: req.body.name, 
+            description: req.body.description,
             assignedTo: assigneeEmp._id,
             assignedToName: assigneeEmp.name,
             dueDate: dueDate,
@@ -100,7 +88,7 @@ const updateTask = async (req, res, next) => {
         }
 
         // updating the task base on the task id
-        const updateTaskQuery = taskUpdateQueryBuilder(req.body);
+        const updateTaskQuery = taskHelper.taskUpdateQueryBuilder(req.body);
         const updatedTaskDetails = await taskServices.updateTasksById(req.params.id, updateTaskQuery);
         res.json({success: updatedTaskDetails});
         
@@ -109,47 +97,6 @@ const updateTask = async (req, res, next) => {
     }
 }
 
-const getAllTaskFilterBuilder = (parameters) => { 
-    const queryFilterParameter = {};
-    
-    const allowedFilterParamters = {
-        "facility": "facility", //
-        "priority": "priority", //
-        "status": "status", //
-        "assignedTo": "assignedTo"
-    }
-
-    Object.keys(parameters).map((item) => { 
-        if (allowedFilterParamters[item]) {
-            queryFilterParameter[item] = parameters[item];
-        }
-    });
-
-    return {...queryFilterParameter}
-}
-
-const taskUpdateQueryBuilder = (parameters) => { 
-    const queryUpdateParameter = {};
-    
-    const allowedChanges = {
-        "name": "name",
-        "description": "description",
-        "dueDate": "dueDate",
-        "assignedToName": "assignedToName",
-        "facility": "facility", //
-        "priority": "priority", //
-        "status": "status", //
-        "assignedTo": "assignedTo"
-    }
-
-    Object.keys(parameters).map((item) => { 
-        if (allowedChanges[item]) {
-            queryUpdateParameter[item] = parameters[item];
-        }
-    });
-
-    return {...queryUpdateParameter}
-}
 
 // All the logic to handle the employee assignment and employee creator details
 const getEmpDetailsTaskCreation = async (requestData, sessionData) => { 
@@ -189,44 +136,12 @@ const getEmpDetailsTaskCreation = async (requestData, sessionData) => {
         }
 }
 
+
+
 const seedDB = async (req, res, next) => { 
 
-    
-const users = [
-    { 
-        name: "emp1", 
-        facilityRole: "facilityUser",
-        facility: "google"
-    },
-    { 
-        name: "emp2", 
-        facilityRole: "facilityLead",
-        facility: "google"
-    },
-    { 
-        name: "emp3", 
-        facilityRole: "facilityUser",
-        facility: "google"
-    },
-    { 
-        name: "emp4", 
-        facilityRole: "facilityLead",
-        facility: "meta"
-    },
-    { 
-        name: "emp5", 
-        facilityRole: "facilityUser",
-        facility: "meta"
-    },
-    { 
-        name: "emp6", 
-        facilityRole: "facilityLead",
-        facility: "meta"
-    }
-];
-
     try { 
-        res.send(await userServices.createManyUser(users));
+        res.send(await userServices.createManyUser(userSeedData));
     } catch (e) {
         console.log(e);
         res.send(e);
@@ -239,6 +154,5 @@ export {
     addTask,
     deleteTask,
     updateTask,
-    getEmployeeWithLessLoad,
     seedDB
 }

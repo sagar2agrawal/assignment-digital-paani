@@ -4,11 +4,10 @@ import { validateReqBody, validateReqParams } from "../middlewares/request-valid
 import { addTaskSchema, deleteTaskSchema } from "../validators/task.validators.js";
 import { authValidator, leadRoleValidator } from "../middlewares/auth-validator.js";
 import { csvFormatToObject } from "../middlewares/task-data-transformer.js";
+
 const taskRouter = new Router();
 
 taskRouter.get('/tasks', authValidator, taskController.getAllTask);
-
-taskRouter.get('/lessLoadEmployee', authValidator, taskController.getEmployeeWithLessLoad);
 
 taskRouter.post('/tasks', authValidator, validateReqBody(addTaskSchema), taskController.addTask);
 
@@ -24,5 +23,8 @@ taskRouter.patch('/tasks/:id', authValidator, taskController.updateTask);
 taskRouter.delete('/tasks/:id', authValidator, validateReqParams(deleteTaskSchema), taskController.deleteTask);
 
 taskRouter.get('/seeddb', taskController.seedDB);
+
+// moved from route to jobs
+// taskRouter.get('/taskreassignoverdue', taskController.taskReAssignOnOverDue);
 
 export default taskRouter;

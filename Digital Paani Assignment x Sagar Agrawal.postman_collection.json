@@ -1,0 +1,783 @@
+{
+	"info": {
+		"_postman_id": "5fc8d5a8-b0fb-45e0-8339-bd4c8115971c",
+		"name": "Digital Paani Assignment x Sagar Agrawal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2484141"
+	},
+	"item": [
+		{
+			"name": "Get All Tasks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "user",
+						"value": "{\"userId\": \"628b1732980a67a0d7842179\", \"userRole\": \"facilityLead\", \"userFacility\": \"meta\"}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4852/api/tasks?facility=google",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4852",
+					"path": [
+						"api",
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "priority",
+							"value": "high",
+							"disabled": true
+						},
+						{
+							"key": "facility",
+							"value": "google"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Task CSV Format",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "user",
+						"value": "{\"userId\": \"628b1732980a67a0d7842179\", \"userRole\": \"facilityLead\", \"userFacility\": \"meta\"}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "one of task,got you another task,628af79f7ce543245f0ee813,1652632221,high,facebook",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4852/api/tasks/csv",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4852",
+					"path": [
+						"api",
+						"tasks",
+						"csv"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Task",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "user",
+						"value": "{\"userId\": \"628c3b3a63f452daa1b21a63\", \"userRole\": \"facilityLead\", \"userFacility\": \"google\"}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"task for another\",\r\n    \"description\": \"description for another\",\r\n    \"assignedTo\": \"628c3b3a63f452daa1b21a62\",\r\n    \"dueDate\": \"1653321978\",\r\n    \"priority\": \"high\",\r\n    \"facility\": \"google\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4852/api/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4852",
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add Task to another facility",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user",
+								"value": "{\"userId\": \"628b1732980a67a0d7842179\", \"userRole\": \"facilityLead\", \"userFacility\": \"meta\"}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"task n\",\r\n    \"description\": \"description n\",\r\n    \"assignedTo\": \"628c3b3a63f452daa1b21a63\",\r\n    \"dueDate\": \"1653321978\",\r\n    \"priority\": \"low\",\r\n    \"facility\": \"meta\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4852/api/tasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4852",
+							"path": [
+								"api",
+								"tasks"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Embedder-Policy",
+							"value": "require-corp"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "Expect-CT",
+							"value": "max-age=0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "89"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"59-9PInb1laWxBVmK1VcoYKoK14R3Y\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 24 May 2022 01:58:11 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"failed\",\n    \"message\": \"Not allowed to create task for emp2 with in meta facility\"\n}"
+				},
+				{
+					"name": "Adding task for one self",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user",
+								"value": "{\"userId\": \"628c3b3a63f452daa1b21a63\", \"userRole\": \"facilityLead\", \"userFacility\": \"google\"}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"task n\",\r\n    \"description\": \"description n\",\r\n    \"assignedTo\": \"628c3b3a63f452daa1b21a63\",\r\n    \"dueDate\": \"1653321978\",\r\n    \"priority\": \"low\",\r\n    \"facility\": \"google\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4852/api/tasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4852",
+							"path": [
+								"api",
+								"tasks"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Embedder-Policy",
+							"value": "require-corp"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "Expect-CT",
+							"value": "max-age=0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "313"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"139-6u+U3PAkdtXeYazgEh515P3D/OA\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 24 May 2022 01:59:09 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"todo\",\n    \"priority\": \"low\",\n    \"assignedToName\": \"emp2\",\n    \"assignedTo\": \"628c3b3a63f452daa1b21a63\",\n    \"createdBy\": \"628c3b3a63f452daa1b21a63\",\n    \"facility\": \"google\",\n    \"dueDate\": \"2022-05-23T16:06:18.000Z\",\n    \"_id\": \"628c3bec63f452daa1b21a7c\",\n    \"createdAt\": \"2022-05-24T01:59:08.844Z\",\n    \"updatedAt\": \"2022-05-24T01:59:08.844Z\",\n    \"__v\": 0\n}"
+				},
+				{
+					"name": "Adding task by lead for another user",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user",
+								"value": "{\"userId\": \"628c3b3a63f452daa1b21a63\", \"userRole\": \"facilityLead\", \"userFacility\": \"google\"}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"task for another\",\r\n    \"description\": \"description for another\",\r\n    \"assignedTo\": \"628c3b3a63f452daa1b21a62\",\r\n    \"dueDate\": \"1653321978\",\r\n    \"priority\": \"high\",\r\n    \"facility\": \"google\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4852/api/tasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4852",
+							"path": [
+								"api",
+								"tasks"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Embedder-Policy",
+							"value": "require-corp"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "Expect-CT",
+							"value": "max-age=0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "315"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"13b-lJNRVlKx3wmRmf+Rf88fTp+eFUA\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 24 May 2022 02:00:19 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"todo\",\n    \"priority\": \"high\",\n    \"assignedToName\": \"emp15\",\n    \"assignedTo\": \"628c3b3a63f452daa1b21a62\",\n    \"createdBy\": \"628c3b3a63f452daa1b21a63\",\n    \"facility\": \"google\",\n    \"dueDate\": \"2022-05-23T16:06:18.000Z\",\n    \"_id\": \"628c3c3263f452daa1b21a86\",\n    \"createdAt\": \"2022-05-24T02:00:18.914Z\",\n    \"updatedAt\": \"2022-05-24T02:00:18.914Z\",\n    \"__v\": 0\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Task",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "user",
+						"value": "{\"userId\": \"628b1732980a67a0d7842179\", \"userRole\": \"facilityLead\", \"userFacility\": \"meta\"}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"priority\": \"low\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4852/api/tasks/6289b3311cab1a82af9b52c9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4852",
+					"path": [
+						"api",
+						"tasks",
+						"6289b3311cab1a82af9b52c9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Seed user DB",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "Sagar",
+						"type": "text"
+					},
+					{
+						"key": "user",
+						"value": "{userId: \"someid\", userFacility: \"some facility}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "UserFacility",
+						"value": "facility",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "userRole",
+						"value": "role",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4852/api/seeddb",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4852",
+					"path": [
+						"api",
+						"seeddb"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Seed user DB",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "Sagar",
+								"type": "text"
+							},
+							{
+								"key": "user",
+								"value": "{userId: \"someid\", userFacility: \"some facility}",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "UserFacility",
+								"value": "facility",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "userRole",
+								"value": "role",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4852/api/seeddb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4852",
+							"path": [
+								"api",
+								"seeddb"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Embedder-Policy",
+							"value": "require-corp"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "Expect-CT",
+							"value": "max-age=0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1106"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"452-UONz2LnPeMMhC1VI5IlDySDCamo\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 24 May 2022 01:56:10 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"name\": \"emp15\",\n        \"facility\": \"google\",\n        \"facilityRole\": \"facilityUser\",\n        \"_id\": \"628c3b3a63f452daa1b21a62\",\n        \"__v\": 0,\n        \"createdAt\": \"2022-05-24T01:56:10.512Z\",\n        \"updatedAt\": \"2022-05-24T01:56:10.512Z\"\n    },\n    {\n        \"name\": \"emp2\",\n        \"facility\": \"google\",\n        \"facilityRole\": \"facilityLead\",\n        \"_id\": \"628c3b3a63f452daa1b21a63\",\n        \"__v\": 0,\n        \"createdAt\": \"2022-05-24T01:56:10.513Z\",\n        \"updatedAt\": \"2022-05-24T01:56:10.513Z\"\n    },\n    {\n        \"name\": \"emp3\",\n        \"facility\": \"google\",\n        \"facilityRole\": \"facilityUser\",\n        \"_id\": \"628c3b3a63f452daa1b21a64\",\n        \"__v\": 0,\n        \"createdAt\": \"2022-05-24T01:56:10.513Z\",\n        \"updatedAt\": \"2022-05-24T01:56:10.513Z\"\n    },\n    {\n        \"name\": \"emp4\",\n        \"facility\": \"meta\",\n        \"facilityRole\": \"facilityLead\",\n        \"_id\": \"628c3b3a63f452daa1b21a65\",\n        \"__v\": 0,\n        \"createdAt\": \"2022-05-24T01:56:10.513Z\",\n        \"updatedAt\": \"2022-05-24T01:56:10.513Z\"\n    },\n    {\n        \"name\": \"emp5\",\n        \"facility\": \"meta\",\n        \"facilityRole\": \"facilityUser\",\n        \"_id\": \"628c3b3a63f452daa1b21a66\",\n        \"__v\": 0,\n        \"createdAt\": \"2022-05-24T01:56:10.513Z\",\n        \"updatedAt\": \"2022-05-24T01:56:10.513Z\"\n    },\n    {\n        \"name\": \"emp6\",\n        \"facility\": \"meta\",\n        \"facilityRole\": \"facilityLead\",\n        \"_id\": \"628c3b3a63f452daa1b21a67\",\n        \"__v\": 0,\n        \"createdAt\": \"2022-05-24T01:56:10.513Z\",\n        \"updatedAt\": \"2022-05-24T01:56:10.513Z\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Delete Task",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "Sagar",
+						"type": "text"
+					},
+					{
+						"key": "user",
+						"value": "{\"userId\": \"asafsafa\", \"userRole\": \"facilityLead\", \"userFacility\": \"meta\"}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4852/api/tasks/628c3b3a63f452daa1b21a67",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4852",
+					"path": [
+						"api",
+						"tasks",
+						"628c3b3a63f452daa1b21a67"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

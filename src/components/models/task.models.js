@@ -1,8 +1,12 @@
 import mongoose from "mongoose";
 
 const taskSchema = new mongoose.Schema({
-    name: String, //
-    description: String,
+    name: {
+        type: String
+    }, //
+    description: {
+        type: String
+    },
     status: {
         type: String,
         enum: ["todo", "done"],
@@ -44,9 +48,8 @@ const taskSchema = new mongoose.Schema({
 );
 
 taskSchema.index(
-    { status: 1, dueDate: 1, priority: 1, assignedTo: 1, facility: 1 },
-    { status: 1, dueDate: 1, facility: 1 }, // Index for finding high priority task which are expired
-    { dueDate: 1, facility: 1} // Index for finding task which are are expired
+    { status: 1, dueDate: 1, priority: 1, facility: 1 }, // Index for finding high priority task which are expired
+    { status: 1, dueDate: 1, facility: 1 } // Index for finding task which are are expired
 );
 
 const taskModel = mongoose.model('Tasks', taskSchema);

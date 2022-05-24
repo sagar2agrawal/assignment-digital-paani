@@ -1,5 +1,6 @@
 import taskModel from "../models/task.models.js";
 import userModel from "../models/users.models.js";
+import { logger, taskHelper } from '../helpers/index.helper.js';
 
 const createTask = async (task) => {
     const createdTask = await taskModel.create(task);
@@ -85,10 +86,57 @@ const userWithLessLoadInFacility = async (facilityID) => {
 }
 
 
-const getOverDueTasks = async (filters) => { 
-    const allOverDueTask = await taskModel.find(filters).lean().exec();
+const getOverDueTasks = async () => { 
+    const allOverDueTask = await taskModel.find({
+        status: {
+            $ne: "done"
+        },
+        dueDate: {
+            $lt: new Date()
+        }
+    },
+    {
+        facility: 1
+    }).lean().exec();
     return allOverDueTask;
 }
+
+const taskReAssignOnOverDue = async () => {
+    try {
+        logger.logger.debug("Task reassingment triggered");
+        const allTasks = await getOverDueTasks(); 
+        const updatedTasks = [];
+        // ideally instead of processing here, it will be added to another queue to processed in background
+        for (const task of allTasks) {
+            const employeeWithLessLoad = await userWithLessLoadInFacility(task.facility);
+
+            if (employeeWithLessLoad.length === 0) {
+                throw new Error("Employee for such facility or such facility found");   
+            }
+
+            const currentDate = new Date();
+
+            const updatedTaskDetails = await updateTasksById(task._id, {
+                dueDate: new Date(currentDate.getTime() + 30000), 
+                assignedTo: employeeWithLessLoad[0]._id
+            });
+
+            updatedTasks.push(updatedTaskDetails._id);
+
+            logger.logger.debug({
+                context: 'Reassingment Overdue Task Jobs',
+                taskId: updatedTaskDetails._id
+            });
+        };
+
+        return updatedTasks;
+    } catch (error) {
+        logger.logger.error(error);
+    }
+}
+
+
+
 
 export {
     createTask,
@@ -97,5 +145,6 @@ export {
     getAllTask,
     updateTasksById, 
     deleteTasksById,
-    getOverDueTasks
+    getOverDueTasks,
+    taskReAssignOnOverDue
 }
